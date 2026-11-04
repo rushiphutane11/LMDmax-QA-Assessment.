@@ -36,7 +36,8 @@ Below are the 5 formally logged defects, separated from general improvement sugg
 *   **Expected Behavior:** The "All" count for drivers should only represent actual valid users (35). Non-user entities like "Groups" or "Broadcast Lists" should not be aggregated into the master driver count.
 *   **Actual Behavior:** The "All" count displays 41. It incorrectly calculates the total by summing the actual drivers (35) with the non-driver Broadcast Lists (6).
 *   **Severity and Business Impact:** **Medium.** This inflates user counts and creates confusing, untrustworthy data metrics for fleet managers who rely on these filters for staffing visibility.
-*   **Supporting Evidence:** `image_7be45e.png`
+*   **Supporting Evidence:** **https://github.com/rushiphutane11/LMDmax-QA-Assessment./blob/701ccc700cad8ab3164fd98ab13f458cc391d703/Task%20B%20Bug%202** `image_7be45e.png`
+
 
 ---
 
