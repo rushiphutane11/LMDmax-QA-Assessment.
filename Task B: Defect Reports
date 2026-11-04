@@ -54,7 +54,7 @@ Below are the 5 formally logged defects, separated from general improvement sugg
 *   **Expected Behavior:** The "All Roles" denominator should equal the exact mathematical sum of all individual role counts presented in the list (20).
 *   **Actual Behavior:** The total count shows "(4/13)". The number 13 mathematically contradicts the 20 available roles listed directly below it. 
 *   **Severity and Business Impact:** **Medium.** Similar to BUG-02, this calculation error compromises the integrity of the data presented to the end user.
-*   **Supporting Evidence:** `image_7bf3c1.png`
+*   **Supporting Evidence:** **https://github.com/rushiphutane11/LMDmax-QA-Assessment./blob/8e0b9d3d01f5fb1302585bb90092d5b02b4920ff/Task%20B%20Bug%203** `image_7bf3c1.png`
 
 ---
 
