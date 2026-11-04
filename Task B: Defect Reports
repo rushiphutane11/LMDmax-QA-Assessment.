@@ -19,8 +19,8 @@ Below are the 5 formally logged defects, separated from general improvement sugg
 *   **Expected Behavior:** On mobile viewports, the left navigation sidebar should collapse into a toggleable hamburger menu, allowing the main dashboard content to scale and be fully visible.
 *   **Actual Behavior:** The sidebar remains fully expanded, overlapping the main dashboard, cutting off its own titles, and making the underlying page content completely unusable.
 *   **Severity and Business Impact:** **High.** This completely blocks core functionality for any manager or driver attempting to access the application via a mobile device.
-*   **Supporting Evidence:** https://github.com/rushiphutane11/LMDmax-QA-Assessment./blob/584b9d5af96d2a01775f54ed6de44fe90c5daf17/Task%20B%20Bug%201 `image_8a077d.png` 
-    
+*   **Supporting Evidence:** [View Screenshot](https://github.com/rushiphutane11/LMDmax-QA-Assessment./blob/584b9d5af96d2a01775f54ed6de44fe90c5daf17/Task%20B%20Bug%201)
+
 ---
 
 ### BUG-02: "All" Driver Type count incorrectly includes non-driver entities (Broadcast Lists)
@@ -36,8 +36,7 @@ Below are the 5 formally logged defects, separated from general improvement sugg
 *   **Expected Behavior:** The "All" count for drivers should only represent actual valid users (35). Non-user entities like "Groups" or "Broadcast Lists" should not be aggregated into the master driver count.
 *   **Actual Behavior:** The "All" count displays 41. It incorrectly calculates the total by summing the actual drivers (35) with the non-driver Broadcast Lists (6).
 *   **Severity and Business Impact:** **Medium.** This inflates user counts and creates confusing, untrustworthy data metrics for fleet managers who rely on these filters for staffing visibility.
-*   **Supporting Evidence:** **https://github.com/rushiphutane11/LMDmax-QA-Assessment./blob/6257d95f858529f2f9f48d5ca0d37c6e78d6c772/Task%20B%20bug%202** `image_7be45e.png`
-
+*   **Supporting Evidence:** [View Screenshot](https://github.com/rushiphutane11/LMDmax-QA-Assessment./blob/6257d95f858529f2f9f48d5ca0d37c6e78d6c772/Task%20B%20bug%202)
 
 ---
 
@@ -54,7 +53,7 @@ Below are the 5 formally logged defects, separated from general improvement sugg
 *   **Expected Behavior:** The "All Roles" denominator should equal the exact mathematical sum of all individual role counts presented in the list (20).
 *   **Actual Behavior:** The total count shows "(4/13)". The number 13 mathematically contradicts the 20 available roles listed directly below it. 
 *   **Severity and Business Impact:** **Medium.** Similar to BUG-02, this calculation error compromises the integrity of the data presented to the end user.
-*   **Supporting Evidence:** **https://github.com/rushiphutane11/LMDmax-QA-Assessment./blob/8e0b9d3d01f5fb1302585bb90092d5b02b4920ff/Task%20B%20Bug%203** `image_7bf3c1.png`
+*   **Supporting Evidence:** [View Screenshot](https://github.com/rushiphutane11/LMDmax-QA-Assessment./blob/8e0b9d3d01f5fb1302585bb90092d5b02b4920ff/Task%20B%20Bug%203)
 
 ---
 
@@ -70,7 +69,7 @@ Below are the 5 formally logged defects, separated from general improvement sugg
 *   **Expected Behavior:** The API should return data corresponding to the selected date range. If the data array is empty, the UI should gracefully display a "No Data Found" empty state.
 *   **Actual Behavior:** The API returns a mismatched payload (claiming `"total_count": 6` but providing an empty `"data": []` array). Because the frontend expects 6 items but receives none, it fails to render and instead paints raw code snippets (e.g., `<!-- ass ver","driv...`) directly onto the screen.
 *   **Severity and Business Impact:** **High.** This directly impacts usability, breaks the module's primary function, and exposes backend HTML/JSON structure to the end user.
-*   **Supporting Evidence:** `image_33abc8.png` and API Response payload JSON. **https://github.com/rushiphutane11/LMDmax-QA-Assessment./blob/ed4c120584d633047512dd98c5114aa7de5622c1/Task%20B%20Bug%204**
+*   **Supporting Evidence:** [View Screenshot](https://github.com/rushiphutane11/LMDmax-QA-Assessment./blob/ed4c120584d633047512dd98c5114aa7de5622c1/Task%20B%20Bug%204)
 
 ---
 
@@ -85,7 +84,4 @@ Below are the 5 formally logged defects, separated from general improvement sugg
 *   **Expected Behavior:** All legend items should be contained cleanly within the borders of the card. The card's CSS height should dynamically expand to accommodate wrapped text.
 *   **Actual Behavior:** The "DNR" label wraps to a second row and clips directly over and outside the bottom boundary line of the UI card.
 *   **Severity and Business Impact:** **Low.** This is a minor visual UI glitch that does not prevent the user from interpreting the data, but it presents an unpolished, unprofessional appearance.
-*   **Supporting Evidence:** `image_8a7ee1.png` **https://github.com/rushiphutane11/LMDmax-QA-Assessment./blob/51b4907d32fe726d8658a8268098df61b599b076/Screenshot%202026-11-04%20173758.png**
-
----
-
+*   **Supporting Evidence:** [View Screenshot](https://github.com/rushiphutane11/LMDmax-QA-Assessment./blob/51b4907d32fe726d8658a8268098df61b599b076/Screenshot%202026-11-04%20173758.png)
