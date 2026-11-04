@@ -1,0 +1,93 @@
+# Task B: Defect Reports
+
+## Execution Summary
+During the execution of the highest-priority test cases defined in Task A, a total of 5 distinct defects were identified. These issues range from critical mobile layout failures and API payload mismatches to data calculation errors in the filtering components. 
+
+Below are the 5 formally logged defects, separated from general improvement suggestions.
+
+---
+
+### BUG-01: Left navigation sidebar overlaps and obscures main content in mobile view
+*   **Affected Screen:** Daily Highlights (`/v2/dashboard/daily-highlights`)
+*   **Browser & Screen Size:** Chrome Desktop (Mobile Emulation - iPhone 16 viewport)
+*   **Selected Date Range:** Default Date Range
+*   **Reproduction Steps:**
+    1. Log into the application.
+    2. Navigate to the Daily Highlights tab.
+    3. Resize the browser to a mobile width (or open DevTools Device Toolbar for iPhone 16).
+    4. Observe the behavior and position of the left-hand navigation menu.
+*   **Expected Behavior:** On mobile viewports, the left navigation sidebar should collapse into a toggleable hamburger menu, allowing the main dashboard content to scale and be fully visible.
+*   **Actual Behavior:** The sidebar remains fully expanded, overlapping the main dashboard, cutting off its own titles, and making the underlying page content completely unusable.
+*   **Severity and Business Impact:** **High.** This completely blocks core functionality for any manager or driver attempting to access the application via a mobile device.
+*   **Supporting Evidence:** `image_8a077d.png` and `image_8a075a.png`
+
+---
+
+### BUG-02: "All" Driver Type count incorrectly includes non-driver entities (Broadcast Lists)
+*   **Affected Screen:** In-App Chat (`/in-app-chat/company/all`)
+*   **Browser & Screen Size:** Chrome Desktop (1920x1080)
+*   **Selected Date Range:** No date range (Default view)
+*   **Reproduction Steps:**
+    1. Navigate to the In-App Chat screen.
+    2. Click the Filter icon next to the search bar.
+    3. Locate the "Driver Type" column.
+    4. Manually sum the standard user statuses (Active 10 + Inactive 25 + Suspended 0 = 35).
+    5. Compare this manual sum to the "All" total at the top of the list.
+*   **Expected Behavior:** The "All" count for drivers should only represent actual valid users (35). Non-user entities like "Groups" or "Broadcast Lists" should not be aggregated into the master driver count.
+*   **Actual Behavior:** The "All" count displays 41. It incorrectly calculates the total by summing the actual drivers (35) with the non-driver Broadcast Lists (6).
+*   **Severity and Business Impact:** **Medium.** This inflates user counts and creates confusing, untrustworthy data metrics for fleet managers who rely on these filters for staffing visibility.
+*   **Supporting Evidence:** `image_7be45e.png`
+
+---
+
+### BUG-03: Incorrect mathematical sum in "All Roles" filter total
+*   **Affected Screen:** In-App Chat (`/in-app-chat/company/all`)
+*   **Browser & Screen Size:** Chrome Desktop (1920x1080)
+*   **Selected Date Range:** No date range (Default view)
+*   **Reproduction Steps:**
+    1. Navigate to the In-App Chat screen.
+    2. Click the Filter icon.
+    3. Locate the "Driver Role" column.
+    4. Manually sum the individual role options: Walker1 (4) + Helper1 (10) + Walker (3) + Helper (3) = 20.
+    5. Compare the sum of the individual roles to the denominator in the "All Roles" total.
+*   **Expected Behavior:** The "All Roles" denominator should equal the exact mathematical sum of all individual role counts presented in the list (20).
+*   **Actual Behavior:** The total count shows "(4/13)". The number 13 mathematically contradicts the 20 available roles listed directly below it. 
+*   **Severity and Business Impact:** **Medium.** Similar to BUG-02, this calculation error compromises the integrity of the data presented to the end user.
+*   **Supporting Evidence:** `image_7bf3c1.png`
+
+---
+
+### BUG-04: `/notes_controller` API ignores date filters and causes UI to render raw HTML/JSON
+*   **Affected Screen:** Daily Notes (`/notes-v2`)
+*   **Browser & Screen Size:** Chrome Desktop (1920x1080)
+*   **Selected Date Range:** Sep 08, 2026 - Oct 09, 2026
+*   **Reproduction Steps:**
+    1. Navigate to the Daily Notes screen.
+    2. Change the date range to "Sep 08, 2026 - Oct 09, 2026".
+    3. Inspect the Network tab for the `/notes_controller` API response.
+    4. Observe the rendered notes on the UI screen.
+*   **Expected Behavior:** The API should return data corresponding to the selected date range. If the data array is empty, the UI should gracefully display a "No Data Found" empty state.
+*   **Actual Behavior:** The API returns a mismatched payload (claiming `"total_count": 6` but providing an empty `"data": []` array). Because the frontend expects 6 items but receives none, it fails to render and instead paints raw code snippets (e.g., `<!-- ass ver","driv...`) directly onto the screen.
+*   **Severity and Business Impact:** **High.** This directly impacts usability, breaks the module's primary function, and exposes backend HTML/JSON structure to the end user.
+*   **Supporting Evidence:** `image_33abc8.png` and API Response payload JSON.
+
+---
+
+### BUG-05: Chart legend "DNR" overflows and clips outside the card container
+*   **Affected Screen:** Compare (`/compare`)
+*   **Browser & Screen Size:** Chrome Desktop (1920x1080)
+*   **Selected Date Range:** Default Date Range
+*   **Reproduction Steps:**
+    1. Navigate to the Compare dashboard.
+    2. Scroll down to the "Packages dispatched vs Delivered vs Returned vs DNR" data row.
+    3. Observe the chart legends at the absolute bottom of the data cards.
+*   **Expected Behavior:** All legend items should be contained cleanly within the borders of the card. The card's CSS height should dynamically expand to accommodate wrapped text.
+*   **Actual Behavior:** The "DNR" label wraps to a second row and clips directly over and outside the bottom boundary line of the UI card.
+*   **Severity and Business Impact:** **Low.** This is a minor visual UI glitch that does not prevent the user from interpreting the data, but it presents an unpolished, unprofessional appearance.
+*   **Supporting Evidence:** `image_8a7ee1.png`
+
+---
+
+## Improvement Suggestions (Not classified as defects)
+*   **Compare Empty States:** Currently, if no driver is selected on the Compare screen, the data grid renders as blank white blocks. Implementing a clear "Select a driver to view data" placeholder would greatly improve user experience.
+*   **Typographical Data Errors:** Station 3 lists its Address value as "Addtess 4". While this appears to be bad test data injected into the staging database rather than a system defect, data sanitization should be reviewed prior to production.
