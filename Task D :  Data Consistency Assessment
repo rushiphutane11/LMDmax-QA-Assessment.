@@ -1,0 +1,29 @@
+# Task D: Data Consistency Assessment
+
+## Testing Scope
+*   **Selected Date Range/Filter:** Week 35, 2026 (`week_number=202635`)
+*   **Inspected Screen:** Weekly Reports -> Current Scorecard Report
+*   **API Endpoint Inspected:** `/current?week_number=202635` (GET)
+
+## Metric Comparisons (UI vs. API Payload)
+
+To verify that the frontend UI accurately reflects backend data without arbitrary manipulation, three specific metrics were cross-referenced against the raw JSON response for the selected week.
+
+### Metric 1: "Delivered" count for Driver (Alejandro Cortes Alvarado)
+*   **UI Display View:** The data table row for "Alejandro Cortes Alvarado" displays **225** in the "Delivered" column.
+*   **API JSON Response:** The corresponding object in the `data` array contains `"name": "Alejandro Cortes Alvarado"` and `"delivered": "225"`.
+*   **Assessment:** **Consistent.** The UI accurately maps and displays the exact numerical string provided by the backend.
+
+### Metric 2: "Seatbelt Off Rate" for Driver (Nghia Lam)
+*   **UI Display View:** The data table row for "Nghia Lam" displays **0.0** in the "Seatbelt Off Rate" column.
+*   **API JSON Response:** The corresponding object in the `data` array contains `"name": "Nghia Lam"` and `"seatbelt_off_rate": "0.0"`.
+*   **Assessment:** **Consistent.** The frontend correctly parses the zero-value float string.
+
+### Metric 3: Empty State Handling / "Fico Score" (Isaiah Lawrence)
+*   **UI Display View:** The data table row for "Isaiah Lawrence" displays a neutral yellow block with the text **No Data** in the "Fico Score" column.
+*   **API JSON Response:** The corresponding object in the `data` array contains `"name": "Isaiah Lawrence"` and explicitly passes the string `"fico_score": "No Data"`.
+*   **Assessment:** **Consistent.** The frontend is not assuming a zero value for missing data; it is accurately rendering the explicit "No Data" string provided by the backend, properly distinguishing between a mathematically verifiable `0.0` (as seen in seatbelts) and unavailable telemetry data.
+
+## Discrepancies & Limitations
+*   **Discrepancies:** No frontend-to-backend mapping discrepancies were found on this specific scorecard view. The UI faithfully renders the payload.
+*   **Limitations on Numerical Accuracy:** While I can verify that the UI correctly displays the payload data provided by the API, **I cannot verify the true mathematical accuracy of the underlying backend calculations.** I do not have access to the raw database telemetry or the SQL logic rules used to generate these derived metrics (e.g., how the system technically calculates the `seatbelt_off_rate` or determines a `rank`). Therefore, this assessment confirms data *transmission consistency*, but does not claim absolute data *accuracy* at the database level.
