@@ -19,9 +19,7 @@ Below are the 5 formally logged defects, separated from general improvement sugg
 *   **Expected Behavior:** On mobile viewports, the left navigation sidebar should collapse into a toggleable hamburger menu, allowing the main dashboard content to scale and be fully visible.
 *   **Actual Behavior:** The sidebar remains fully expanded, overlapping the main dashboard, cutting off its own titles, and making the underlying page content completely unusable.
 *   **Severity and Business Impact:** **High.** This completely blocks core functionality for any manager or driver attempting to access the application via a mobile device.
-*   **Supporting Evidence:**  Task B Bug 1 [�PNG
-
- ]`image_8a077d.png` and `image_8a075a.png`
+*   **Supporting Evidence:** `image_8a077d.png` `
     
 ---
 
