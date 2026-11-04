@@ -70,7 +70,7 @@ Below are the 5 formally logged defects, separated from general improvement sugg
 *   **Expected Behavior:** The API should return data corresponding to the selected date range. If the data array is empty, the UI should gracefully display a "No Data Found" empty state.
 *   **Actual Behavior:** The API returns a mismatched payload (claiming `"total_count": 6` but providing an empty `"data": []` array). Because the frontend expects 6 items but receives none, it fails to render and instead paints raw code snippets (e.g., `<!-- ass ver","driv...`) directly onto the screen.
 *   **Severity and Business Impact:** **High.** This directly impacts usability, breaks the module's primary function, and exposes backend HTML/JSON structure to the end user.
-*   **Supporting Evidence:** `image_33abc8.png` and API Response payload JSON.
+*   **Supporting Evidence:** `image_33abc8.png` and API Response payload JSON. **https://github.com/rushiphutane11/LMDmax-QA-Assessment./blob/ed4c120584d633047512dd98c5114aa7de5622c1/Task%20B%20Bug%204**
 
 ---
 
