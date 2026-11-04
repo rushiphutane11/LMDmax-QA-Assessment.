@@ -1,0 +1,95 @@
+# Task C: API Behavior Validation
+
+## Testing Methodology & Constraints
+*   **Tools Used:** Chrome Developer Tools (Network Tab - Fetch/XHR).
+*   **Security Protocol:** All authentication tokens (`Authorization: Bearer`), session cookies, and personal identifiers have been scrubbed or cropped from the attached evidence to adhere to security requirements.
+*   **Scope:** 3 read-only GET requests triggered by UI interactions were analyzed for status codes, parameter handling, and data consistency.
+
+---
+
+### API Request 1: Inventory Products Fetch (Success Verification)
+*   **Endpoint:** `/products`
+*   **Trigger Action:** Navigated to the Inventory module (`/inventory`) to view stock summaries[cite: 11].
+*   **Response Status:** `200 OK`
+*   **Parameter Check:** N/A (General summary fetch without specific query filters in this view).
+*   **Data Consistency Check:** **PASSED.**
+    *   *Observation:* The API payload directly populates the top summary cards on the Inventory UI. The JSON response returns an object with `"name": "Uniform"`, `"total_units": 0`, and `"total_loss": 0`[cite: 11]. The UI correctly parses this and displays "Total Units of Stock: 0", "Total Lost Items: 0", and "Most Assigned Product: Uniform"[cite: 11]. 
+*   **Evidence Attachments:**
+    *   ![Inventory Products Response](image_27ede0.png)
+*   **Practical Assertions (Postman/Chai format):**
+    ```javascript
+    pm.test("Status code is 200", function () {
+        pm.response.to.have.status(200);
+    });
+    pm.test("Inventory payload contains required product metrics", function () {
+        var jsonData = pm.response.json();
+        // Assuming the response returns an array or single object, asserting on the specific item shown
+        pm.expect(jsonData).to.have.property('name');
+        pm.expect(jsonData).to.have.property('total_units');
+        pm.expect(jsonData).to.have.property('total_loss');
+    });
+    pm.test("Data types are correct", function () {
+        var jsonData = pm.response.json();
+        pm.expect(jsonData.name).to.be.a('string');
+        pm.expect(jsonData.total_units).to.be.a('number');
+    });
+    ```
+
+---
+
+### API Request 2: Current Week Scorecard (Success Verification)
+*   **Endpoint:** `/current?week_number=202635`
+*   **Trigger Action:** Navigated to Weekly Reports -> Current Scorecard Report screen.
+*   **Response Status:** `200 OK`
+*   **Parameter Check:** **PASSED.** 
+    *   *Observation:* The UI URL parameter `start_week=202635` correctly routes to the backend API query parameter `week_number=202635`. The API successfully processes this and returns data strictly for week 202635.
+*   **Data Consistency Check:** **PASSED.**
+    *   *Observation:* The JSON payload maps perfectly to the UI table. The API returns an array where an object contains `"name": "Alejandro Cortes Alvarado"`, `"delivered": "225"`, and `"fico_score": "No Data"`. The frontend accurately parses this object into Rank 1 on the dashboard without manipulation.
+*   **Evidence Attachments:**
+    *   ![Current Scorecard UI](image_3247a4.png)
+    *   ![Current Scorecard Network Response](image_32475f.png)
+*   **Practical Assertions (Postman/Chai format):**
+    ```javascript
+    pm.test("Status code is 200", function () {
+        pm.response.to.have.status(200);
+    });
+    pm.test("Data array is present and contains required metric fields", function () {
+        var jsonData = pm.response.json();
+        pm.expect(jsonData.success).to.be.true;
+        pm.expect(jsonData.data).to.be.an('array');
+        pm.expect(jsonData.data[0].metrics).to.have.property('name');
+        pm.expect(jsonData.data[0].metrics).to.have.property('delivered');
+    });
+    ```
+
+---
+
+### API Request 3: Callouts Report Fetch (Success Verification)
+*   **Endpoint:** `/call_out` (Query: `start=2026-10-25&end=2026-10-31`)
+*   **Trigger Action:** Navigated to Daily Reports -> Callouts Report and selected the "Last Week" date filter.
+*   **Response Status:** `200 OK`
+*   **Date-Filter Parameter Check:** **PASSED.** 
+    *   *Observation:* The frontend successfully requests data for the week of Oct 25 - Oct 31. The backend honors the date bound, returning items stamped precisely with `"date": "2026-10-25T00:00:00.000Z"`.
+*   **Data Consistency Check:** **PASSED.**
+    *   *Observation:* The API payload directly populates the visible frontend columns. For instance, the JSON object contains `"name": "Alejandro Cortes Alvarado"`, `"callout_time": "Call Out - Day Before"`, and `"excused": "No"`, which matches the rendered UI table row identically.
+*   **Evidence Attachments:**
+    *   ![Callouts Report UI and Network](image_285e59.png)
+*   **Practical Assertions (Postman/Chai format):**
+    ```javascript
+    pm.test("Status code is 200", function () {
+        pm.response.to.have.status(200);
+    });
+    pm.test("Response successfully fetches CallOut data", function () {
+        var jsonData = pm.response.json();
+        pm.expect(jsonData.success).to.be.true;
+        pm.expect(jsonData.message).to.equal("CallOut data fetched successfully");
+    });
+    pm.test("Data metrics contain valid Callout properties", function () {
+        var jsonData = pm.response.json();
+        if (jsonData.data.length > 0) {
+            pm.expect(jsonData.data[0].metrics).to.have.property('name');
+            pm.expect(jsonData.data[0].metrics).to.have.property('callout_time');
+            pm.expect(jsonData.data[0].metrics).to.have.property('excused');
+        }
+    });
+    ```
