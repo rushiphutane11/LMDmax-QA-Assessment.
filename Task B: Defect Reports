@@ -85,7 +85,7 @@ Below are the 5 formally logged defects, separated from general improvement sugg
 *   **Expected Behavior:** All legend items should be contained cleanly within the borders of the card. The card's CSS height should dynamically expand to accommodate wrapped text.
 *   **Actual Behavior:** The "DNR" label wraps to a second row and clips directly over and outside the bottom boundary line of the UI card.
 *   **Severity and Business Impact:** **Low.** This is a minor visual UI glitch that does not prevent the user from interpreting the data, but it presents an unpolished, unprofessional appearance.
-*   **Supporting Evidence:** `image_8a7ee1.png`
+*   **Supporting Evidence:** `image_8a7ee1.png` **https://github.com/rushiphutane11/LMDmax-QA-Assessment./blob/51b4907d32fe726d8658a8268098df61b599b076/Screenshot%202026-11-04%20173758.png**
 
 ---
 
