@@ -89,6 +89,3 @@ Below are the 5 formally logged defects, separated from general improvement sugg
 
 ---
 
-## Improvement Suggestions (Not classified as defects)
-*   **Compare Empty States:** Currently, if no driver is selected on the Compare screen, the data grid renders as blank white blocks. Implementing a clear "Select a driver to view data" placeholder would greatly improve user experience.
-*   **Typographical Data Errors:** Station 3 lists its Address value as "Addtess 4". While this appears to be bad test data injected into the staging database rather than a system defect, data sanitization should be reviewed prior to production.
